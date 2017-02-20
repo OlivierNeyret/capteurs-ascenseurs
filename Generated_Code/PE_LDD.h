@@ -6,7 +6,7 @@
 **     Version     : Component 01.046, Driver 01.00, CPU db: 3.00.000
 **     Repository  : Kinetis
 **     Compiler    : GNU C Compiler
-**     Date/Time   : 2017-02-10, 15:54, # CodeGen: 1
+**     Date/Time   : 2017-02-20, 14:13, # CodeGen: 3
 **
 **     Copyright : 1997 - 2015 Freescale Semiconductor, Inc. 
 **     All Rights Reserved.
@@ -55,7 +55,6 @@
 #include "PE_Types.h"
 #include "PE_Error.h"
 #include "PE_Const.h"
-#include "GI2C1.h"
 #include "CI2C1.h"
 
 

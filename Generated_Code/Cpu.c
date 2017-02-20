@@ -8,7 +8,7 @@
 **     Repository  : Kinetis
 **     Datasheet   : K64P144M120SF5RM, Rev.2, January 2014
 **     Compiler    : GNU C Compiler
-**     Date/Time   : 2017-02-10, 15:54, # CodeGen: 1
+**     Date/Time   : 2017-02-20, 14:13, # CodeGen: 3
 **     Abstract    :
 **
 **     Settings    :
@@ -107,8 +107,6 @@ void Common_Init(void)
 #if CPU_COMPONENTS_INIT
 void Components_Init(void)
 {
-  /* ### GenericI2C "GI2C1" init code ... */
-  GI2C1_Init();
 }
 #endif /* CPU_COMPONENTS_INIT */
 

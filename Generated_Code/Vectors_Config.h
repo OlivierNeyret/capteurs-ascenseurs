@@ -49,7 +49,6 @@
 /* MODULE Vectors_Config.h */
   
 #include "Cpu.h"
-#include "GI2C1.h"
 #include "CI2C1.h"
 #include "Events.h"
 

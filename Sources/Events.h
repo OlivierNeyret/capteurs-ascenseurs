@@ -33,7 +33,6 @@
 #include "PE_Error.h"
 #include "PE_Const.h"
 #include "IO_Map.h"
-#include "GI2C1.h"
 #include "CI2C1.h"
 #include "Pins1.h"
 
@@ -56,6 +55,46 @@ extern "C" {
 /* ===================================================================*/
 void Cpu_OnNMI(void);
 
+
+/*
+** ===================================================================
+**     Event       :  CI2C1_OnMasterBlockSent (module Events)
+**
+**     Component   :  CI2C1 [I2C_LDD]
+*/
+/*!
+**     @brief
+**         This event is called when I2C in master mode finishes the
+**         transmission of the data successfully. This event is not
+**         available for the SLAVE mode and if MasterSendBlock is
+**         disabled. 
+**     @param
+**         UserDataPtr     - Pointer to the user or
+**                           RTOS specific data. This pointer is passed
+**                           as the parameter of Init method.
+*/
+/* ===================================================================*/
+void CI2C1_OnMasterBlockSent(LDD_TUserData *UserDataPtr);
+
+/*
+** ===================================================================
+**     Event       :  CI2C1_OnMasterBlockReceived (module Events)
+**
+**     Component   :  CI2C1 [I2C_LDD]
+*/
+/*!
+**     @brief
+**         This event is called when I2C is in master mode and finishes
+**         the reception of the data successfully. This event is not
+**         available for the SLAVE mode and if MasterReceiveBlock is
+**         disabled.
+**     @param
+**         UserDataPtr     - Pointer to the user or
+**                           RTOS specific data. This pointer is passed
+**                           as the parameter of Init method.
+*/
+/* ===================================================================*/
+void CI2C1_OnMasterBlockReceived(LDD_TUserData *UserDataPtr);
 
 /* END Events */
 

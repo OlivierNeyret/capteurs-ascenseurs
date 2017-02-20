@@ -7,7 +7,7 @@
 **     Version     : Component 01.016, Driver 01.07, CPU db: 3.00.000
 **     Repository  : Kinetis
 **     Compiler    : GNU C Compiler
-**     Date/Time   : 2017-02-10, 15:54, # CodeGen: 1
+**     Date/Time   : 2017-02-20, 17:10, # CodeGen: 5
 **     Abstract    :
 **          This component encapsulates the internal I2C communication
 **          interface. The implementation of the interface is based
@@ -46,12 +46,12 @@
 **              High drive select                          : Disabled
 **              Input Glitch filter                        : 0
 **            Internal frequency (multiplier factor)       : 50 MHz
-**            Bits 0-2 of Frequency divider register       : 000
-**            Bits 3-5 of Frequency divider register       : 000
-**            SCL frequency                                : 2500 kHz
-**            SDA Hold                                     : 0.14 us
-**            SCL start Hold                               : 0.12 us
-**            SCL stop Hold                                : 0.22 us
+**            Bits 0-2 of Frequency divider register       : 011
+**            Bits 3-5 of Frequency divider register       : 101
+**            SCL frequency                                : 97.656 kHz
+**            SDA Hold                                     : 1.3 us
+**            SCL start Hold                               : 5.08 us
+**            SCL stop Hold                                : 5.14 us
 **            Control acknowledge bit                      : Disabled
 **            Low timeout                                  : Disabled
 **          Initialization                                 : 
@@ -83,10 +83,8 @@
 **            Clock configuration 7                        : This component disabled
 **     Contents    :
 **         Init               - LDD_TDeviceData* CI2C1_Init(LDD_TUserData *UserDataPtr);
-**         Deinit             - void CI2C1_Deinit(LDD_TDeviceData *DeviceDataPtr);
 **         MasterSendBlock    - LDD_TError CI2C1_MasterSendBlock(LDD_TDeviceData *DeviceDataPtr, LDD_TData...
 **         MasterReceiveBlock - LDD_TError CI2C1_MasterReceiveBlock(LDD_TDeviceData *DeviceDataPtr, LDD_TData...
-**         SelectSlaveDevice  - LDD_TError CI2C1_SelectSlaveDevice(LDD_TDeviceData *DeviceDataPtr,...
 **
 **     Copyright : 1997 - 2015 Freescale Semiconductor, Inc. 
 **     All Rights Reserved.
@@ -169,10 +167,8 @@ extern "C" {
   
 /* Methods configuration constants - generated for all enabled component's methods */
 #define CI2C1_Init_METHOD_ENABLED      /*!< Init method of the component CI2C1 is enabled (generated) */
-#define CI2C1_Deinit_METHOD_ENABLED    /*!< Deinit method of the component CI2C1 is enabled (generated) */
 #define CI2C1_MasterSendBlock_METHOD_ENABLED /*!< MasterSendBlock method of the component CI2C1 is enabled (generated) */
 #define CI2C1_MasterReceiveBlock_METHOD_ENABLED /*!< MasterReceiveBlock method of the component CI2C1 is enabled (generated) */
-#define CI2C1_SelectSlaveDevice_METHOD_ENABLED /*!< SelectSlaveDevice method of the component CI2C1 is enabled (generated) */
 
 /* Events configuration constants - generated for all enabled component's events */
 #define CI2C1_OnMasterBlockSent_EVENT_ENABLED /*!< OnMasterBlockSent event of the component CI2C1 is enabled (generated) */
@@ -204,21 +200,6 @@ extern "C" {
 */
 /* ===================================================================*/
 LDD_TDeviceData* CI2C1_Init(LDD_TUserData *UserDataPtr);
-
-/*
-** ===================================================================
-**     Method      :  CI2C1_Deinit (component I2C_LDD)
-*/
-/*!
-**     @brief
-**         Deinitializes the device. Switches off the device, frees the
-**         device data structure memory, interrupts vectors, etc.
-**     @param
-**         DeviceDataPtr   - Device data structure
-**                           pointer returned by <Init> method.
-*/
-/* ===================================================================*/
-void CI2C1_Deinit(LDD_TDeviceData *DeviceDataPtr);
 
 /*
 ** ===================================================================
@@ -317,41 +298,6 @@ LDD_TError CI2C1_MasterSendBlock(LDD_TDeviceData *DeviceDataPtr, LDD_TData *Buff
 */
 /* ===================================================================*/
 LDD_TError CI2C1_MasterReceiveBlock(LDD_TDeviceData *DeviceDataPtr, LDD_TData *BufferPtr, LDD_I2C_TSize Size, LDD_I2C_TSendStop SendStop);
-
-/*
-** ===================================================================
-**     Method      :  CI2C1_SelectSlaveDevice (component I2C_LDD)
-*/
-/*!
-**     @brief
-**         This method selects a new slave for communication by its
-**         7-bit slave, 10-bit address or general call value. Any send
-**         or receive method directs to or from selected device, until
-**         a new slave device is selected by this method. This method
-**         is available for the MASTER mode.
-**     @param
-**         DeviceDataPtr   - Device data structure
-**                           pointer returned by <Init> method.
-**     @param
-**         AddrType        - Specify type of slave address
-**                           (7bit, 10bit or general call address), e.g.
-**                           LDD_I2C_ADDRTYPE_7BITS.
-**     @param
-**         Addr            - 7bit or 10bit slave address value.
-**     @return
-**                         - Error code, possible codes:
-**                           ERR_OK - OK
-**                           ERR_BUSY - The device is busy, wait until
-**                           the current operation is finished.
-**                           ERR_DISABLED -  The device is disabled.
-**                           ERR_SPEED - This device does not work in
-**                           the active clock configuration
-**                           ERR_PARAM_ADDRESS_TYPE -  Invalid address
-**                           type.
-**                           ERR_PARAM_ADDRESS -  Invalid address value.
-*/
-/* ===================================================================*/
-LDD_TError CI2C1_SelectSlaveDevice(LDD_TDeviceData *DeviceDataPtr, LDD_I2C_TAddrType AddrType, LDD_I2C_TAddr Addr);
 
 /*
 ** ===================================================================
