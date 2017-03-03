@@ -40,9 +40,7 @@
 #include "Init_Config.h"
 /* User includes (#include below this line is not maintained by Processor Expert) */
 #include "barometer.h"
-
-#define ACC_ADDRESS 0x1D
-
+#include "accelerometer.h"
 
 #define ACC_REG_ADDRESS 0x00 //to be change
 #define ACC_REG_SIZE 0x00 //to be change
@@ -60,7 +58,7 @@ int main(void)
 {
 	/* Write your local variable definition here */
 	LDD_TDeviceData* i2c_component;
-	uint8_t buffer_acc[420];
+	uint8_t buffer_acc[6];
 	int8_t buffer_bar[3];
 
 	float altitude; //Altitude in meters
@@ -72,13 +70,15 @@ int main(void)
 	/* For example: for(;;) { } */
 	i2c_component = CI2C1_Init(NULL);
 	CI2C1_SelectSlaveDevice(i2c_component,LDD_I2C_ADDRTYPE_7BITS,BAR_ADDRESS);
-	initBarometer(i2c_component);
+	initBarometer();
+	CI2C1_SelectSlaveDevice(i2c_component,LDD_I2C_ADDRTYPE_7BITS,ACC_ADDRESS);
+	initAccelerometer();
 	while(1)
 	{
 		CI2C1_SelectSlaveDevice(i2c_component,LDD_I2C_ADDRTYPE_7BITS,ACC_ADDRESS);
-		//readAcceleration(i2c_component);
+		//readAcceleration();
 		CI2C1_SelectSlaveDevice(i2c_component,LDD_I2C_ADDRTYPE_7BITS,BAR_ADDRESS);
-		readAltitude(i2c_component, buffer_bar);
+		readAltitude(buffer_bar);
 		altitude = convertQ164toFloat(buffer_bar);
 	}
 	/*** Don't write any code pass this line, or it will be deleted during code generation. ***/

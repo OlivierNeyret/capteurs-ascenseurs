@@ -5,16 +5,19 @@
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
 ../Sources/Events.c \
+../Sources/accelerometer.c \
 ../Sources/barometer.c \
 ../Sources/main.c 
 
 OBJS += \
 ./Sources/Events.o \
+./Sources/accelerometer.o \
 ./Sources/barometer.o \
 ./Sources/main.o 
 
 C_DEPS += \
 ./Sources/Events.d \
+./Sources/accelerometer.d \
 ./Sources/barometer.d \
 ./Sources/main.d 
 

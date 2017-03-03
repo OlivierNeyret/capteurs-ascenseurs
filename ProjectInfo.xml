@@ -58,6 +58,7 @@
       <PathName>/home/olivier/git/capteurs-ascenseurs/Generated_Code/PE_LDD.c</PathName>
       <PathName>/home/olivier/git/capteurs-ascenseurs/Project_Settings/Startup_Code/startup.c</PathName>
       <PathName>/home/olivier/git/capteurs-ascenseurs/Sources/Events.c</PathName>
+      <PathName>/home/olivier/git/capteurs-ascenseurs/Sources/accelerometer.c</PathName>
       <PathName>/home/olivier/git/capteurs-ascenseurs/Sources/barometer.c</PathName>
       <PathName>/home/olivier/git/capteurs-ascenseurs/Sources/main.c</PathName>
       <PathName>/home/olivier/git/capteurs-ascenseurs/Static_Code/System/CPU_Init.c</PathName>
@@ -76,6 +77,7 @@
       <PathName>/home/olivier/git/capteurs-ascenseurs/Generated_Code/PE_Types.h</PathName>
       <PathName>/home/olivier/git/capteurs-ascenseurs/Generated_Code/Vectors_Config.h</PathName>
       <PathName>/home/olivier/git/capteurs-ascenseurs/Sources/Events.h</PathName>
+      <PathName>/home/olivier/git/capteurs-ascenseurs/Sources/accelerometer.h</PathName>
       <PathName>/home/olivier/git/capteurs-ascenseurs/Sources/barometer.h</PathName>
       <PathName>/home/olivier/git/capteurs-ascenseurs/Static_Code/IO_Map/MK64F12.h</PathName>
       <PathName>/home/olivier/git/capteurs-ascenseurs/Static_Code/PDD/ADC_PDD.h</PathName>

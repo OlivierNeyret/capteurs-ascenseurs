@@ -19,7 +19,7 @@
 /* User includes */
 #include "barometer.h"
 
-bool initBarometer(LDD_TDeviceData* i2c_component)
+bool initBarometer()
 {
 	bool result = TRUE;
 	result &= writeInSensorRegister(&BAR_CTRL_REG1, &INIT_ALTI);
@@ -28,7 +28,7 @@ bool initBarometer(LDD_TDeviceData* i2c_component)
 	return result;
 }
 
-bool newBarometerDataAvailable(LDD_TDeviceData* i2c_component)
+bool newBarometerDataAvailable()
 {
 	bool result;
 	uint8_t value;
@@ -37,13 +37,14 @@ bool newBarometerDataAvailable(LDD_TDeviceData* i2c_component)
 	return FALSE;
 }
 
-bool readAltitude(LDD_TDeviceData* i2c_component, int8_t* buffer)
+bool readAltitude(int8_t* buffer)
 {
 	bool result = TRUE;
-	while(!newBarometerDataAvailable(i2c_component)) {}
+	while(!newBarometerDataAvailable()) {}
 	result &= readFromSensorRegister(&BAR_DATA_MSB,buffer);
 	result &= readFromSensorRegister(&BAR_DATA_CSB,buffer+1);
 	result &= readFromSensorRegister(&BAR_DATA_LSB,buffer+2);
+	buffer[2] = buffer[2] >> 4;
 	return result;
 }
 

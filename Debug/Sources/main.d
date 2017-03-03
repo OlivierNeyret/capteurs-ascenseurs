@@ -57,7 +57,7 @@ Sources/main.o: ../Sources/main.c \
  /home/olivier/git/capteurs-ascenseurs/Static_Code/PDD/WDOG_PDD.h \
  /home/olivier/git/capteurs-ascenseurs/Generated_Code/Init_Config.h \
  /home/olivier/git/capteurs-ascenseurs/Generated_Code/CPU_Config.h \
- ../Sources/barometer.h
+ ../Sources/barometer.h ../Sources/accelerometer.h
 
 /home/olivier/git/capteurs-ascenseurs/Generated_Code/Cpu.h:
 
@@ -176,3 +176,5 @@ Sources/main.o: ../Sources/main.c \
 /home/olivier/git/capteurs-ascenseurs/Generated_Code/CPU_Config.h:
 
 ../Sources/barometer.h:
+
+../Sources/accelerometer.h:
