@@ -19,7 +19,7 @@
 /* User includes */
 #include "barometer.h"
 
-bool initBarometer()
+bool initBarometer(LDD_DeviceData* i2c_component)
 {
 	bool result = TRUE;
 	CI2C1_SelectSlaveDevice(i2c_component,LDD_I2C_ADDRTYPE_7BITS,BAR_ADDRESS);
@@ -29,7 +29,7 @@ bool initBarometer()
 	return result;
 }
 
-bool newBarometerDataAvailable()
+bool newBarometerDataAvailable(LDD_DeviceData* i2c_component)
 {
 	bool result;
 	uint8_t value;
@@ -39,12 +39,18 @@ bool newBarometerDataAvailable()
 	return FALSE;
 }
 
-bool readAltitude(uint8_t* buffer)
+bool readAltitude(LDD_DeviceData* i2c_component, uint8_t* buffer)
 {
 	bool result = TRUE;
-	while(!newBarometerDataAvailable()) {}
+	while(!newBarometerDataAvailable(i2c_component)) {}
 	result &= readFromSensorRegister(&BAR_DATA_MSB,buffer);
 	result &= readFromSensorRegister(&BAR_DATA_CSB,buffer+1);
 	result &= readFromSensorRegister(&BAR_DATA_LSB,buffer+2);
 	return result;
+}
+
+float convertQ16-4toFloat(uint8_t* q164_tab)
+{
+	float result;
+	int32_t q164Concat =
 }

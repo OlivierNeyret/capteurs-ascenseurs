@@ -26,8 +26,8 @@ const uint8_t ACTIVE_MODE = 0x81; // altimeter mode and active mode
 
 const uint8_t BAR_MASK_STATUS = 0x08;
 
-bool initBarometer();
-bool newBarometerDataAvailable();
-bool readAltitude();
+bool initBarometer(LDD_DeviceData* i2c_component);
+bool newBarometerDataAvailable(LDD_DeviceData* i2c_component);
+bool readAltitude(LDD_DeviceData* i2c_component);
 
 #endif /* SOURCES_BAROMETER_H_ */

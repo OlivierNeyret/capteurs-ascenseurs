@@ -48,10 +48,9 @@
 #define ACC_REG_SIZE 0x00 //to be change
 
 
-static bool writeInSensorRegister(uint8_t* reg, uint8_t* value);
-static bool readFromSensorRegister(uint8_t* reg, uint8_t* buffer);
+bool writeInSensorRegister(uint8_t* reg, uint8_t* value);
+bool readFromSensorRegister(uint8_t* reg, uint8_t* buffer);
 
-LDD_DeviceData* i2c_component;
 volatile bool dataI2CSent = FALSE;
 volatile bool dataI2CReceived = FALSE;
 
@@ -60,6 +59,7 @@ int main(void)
 /*lint -restore Enable MISRA rule (6.3) checking. */
 {
 	/* Write your local variable definition here */
+	LDD_DeviceData* i2c_component;
 	uint8_t buffer_acc[];
 	uint8_t buffer_bar[3];
 	/*** Processor Expert internal initialization. DON'T REMOVE THIS CODE!!! ***/
@@ -73,9 +73,9 @@ int main(void)
 	while(1)
 	{
 		CI2C1_SelectSlaveDevice(i2c_component,LDD_I2C_ADDRTYPE_7BITS,ACC_ADDRESS);
-		readAcceleration();
+		readAcceleration(i2c_component);
 		CI2C1_SelectSlaveDevice(i2c_component,LDD_I2C_ADDRTYPE_7BITS,BAR_ADDRESS);
-		readAltitude(buffer_bar);
+		readAltitude(i2c_component, buffer_bar);
 	}
 	/*** Don't write any code pass this line, or it will be deleted during code generation. ***/
   /*** RTOS startup code. Macro PEX_RTOS_START is defined by the RTOS component. DON'T MODIFY THIS CODE!!! ***/
@@ -90,7 +90,7 @@ int main(void)
 
 /* END main */
 
-static bool writeInSensorRegister(uint8_t* reg, uint8_t* value)
+bool writeInSensorRegister(uint8_t* reg, uint8_t* value)
 {
 	LDD_TError error;
 	dataI2CSent = FALSE;
@@ -104,7 +104,7 @@ static bool writeInSensorRegister(uint8_t* reg, uint8_t* value)
 	return FALSE;
 }
 
-static bool readFromSensorRegister(uint8_t* reg, uint8_t* buffer)
+bool readFromSensorRegister(uint8_t* reg, uint8_t* buffer)
 {
 	LDD_TError error;
 	dataI2CSent = FALSE;
