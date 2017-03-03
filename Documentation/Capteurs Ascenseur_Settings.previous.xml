@@ -107,13 +107,13 @@
           <High_drive_select v="Disabled" />
           <Input_Glitch_filter v="0" />
         </group>
-        <Internal_frequency__multiplier_factor_ v="12.5 MHz" />
-        <Bits_0_2_of_Frequency_divider_register v="000" />
-        <Bits_3_5_of_Frequency_divider_register v="000" />
-        <SCL_frequency v="625 kHz" />
-        <SDA_Hold v="0.56 us" />
-        <SCL_start_Hold v="0.48 us" />
-        <SCL_stop_Hold v="0.88 us" />
+        <Internal_frequency__multiplier_factor_ v="50 MHz" />
+        <Bits_0_2_of_Frequency_divider_register v="011" />
+        <Bits_3_5_of_Frequency_divider_register v="101" />
+        <SCL_frequency v="97.656 kHz" />
+        <SDA_Hold v="1.3 us" />
+        <SCL_start_Hold v="5.08 us" />
+        <SCL_stop_Hold v="5.14 us" />
         <boolgroup name="Control acknowledge bit" v="Disabled" />
         <boolgroup name="Low timeout" v="Disabled" />
       </group>

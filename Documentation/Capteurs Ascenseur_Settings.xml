@@ -160,7 +160,7 @@
       <SlaveGetReceivedDataNum v="don&amp;apos;t generate code" />
       <SlaveUpdateReceiveBlockSize v="don&amp;apos;t generate code" />
       <SlaveCancelReceptionBlock v="don&amp;apos;t generate code" />
-      <SelectSlaveDevice v="don&amp;apos;t generate code" />
+      <SelectSlaveDevice v="generate code" />
       <SendAcknowledge v="don&amp;apos;t generate code" />
       <GetError v="don&amp;apos;t generate code" />
       <CheckBus v="don&amp;apos;t generate code" />

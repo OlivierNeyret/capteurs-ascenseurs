@@ -34,7 +34,6 @@
 #include "PE_Const.h"
 #include "IO_Map.h"
 #include "CI2C1.h"
-#include "Pins1.h"
 
 #ifdef __cplusplus
 extern "C" {

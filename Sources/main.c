@@ -48,8 +48,8 @@
 #define ACC_REG_SIZE 0x00 //to be change
 
 
-bool writeInSensorRegister(uint8_t* reg, uint8_t* value);
-bool readFromSensorRegister(uint8_t* reg, uint8_t* buffer);
+bool writeInSensorRegister(LDD_TDeviceData* i2c_component, uint8_t* reg, uint8_t* value);
+bool readFromSensorRegister(LDD_TDeviceData* i2c_component, uint8_t* reg, uint8_t* buffer);
 
 volatile bool dataI2CSent = FALSE;
 volatile bool dataI2CReceived = FALSE;
@@ -59,9 +59,11 @@ int main(void)
 /*lint -restore Enable MISRA rule (6.3) checking. */
 {
 	/* Write your local variable definition here */
-	LDD_DeviceData* i2c_component;
-	uint8_t buffer_acc[];
-	uint8_t buffer_bar[3];
+	LDD_TDeviceData* i2c_component;
+	uint8_t buffer_acc[420];
+	int8_t buffer_bar[3];
+
+	float altitude; //Altitude in meters
 	/*** Processor Expert internal initialization. DON'T REMOVE THIS CODE!!! ***/
 	PE_low_level_init();
 	/*** End of Processor Expert internal initialization.                    ***/
@@ -69,11 +71,12 @@ int main(void)
 	/* Write your code here */
 	/* For example: for(;;) { } */
 	i2c_component = CI2C1_Init(NULL);
-	initBarometer();
+	CI2C1_SelectSlaveDevice(i2c_component,LDD_I2C_ADDRTYPE_7BITS,BAR_ADDRESS);
+	initBarometer(i2c_component);
 	while(1)
 	{
 		CI2C1_SelectSlaveDevice(i2c_component,LDD_I2C_ADDRTYPE_7BITS,ACC_ADDRESS);
-		readAcceleration(i2c_component);
+		//readAcceleration(i2c_component);
 		CI2C1_SelectSlaveDevice(i2c_component,LDD_I2C_ADDRTYPE_7BITS,BAR_ADDRESS);
 		readAltitude(i2c_component, buffer_bar);
 	}
@@ -90,7 +93,7 @@ int main(void)
 
 /* END main */
 
-bool writeInSensorRegister(uint8_t* reg, uint8_t* value)
+bool writeInSensorRegister(LDD_TDeviceData* i2c_component, uint8_t* reg, uint8_t* value)
 {
 	LDD_TError error;
 	dataI2CSent = FALSE;
@@ -104,7 +107,7 @@ bool writeInSensorRegister(uint8_t* reg, uint8_t* value)
 	return FALSE;
 }
 
-bool readFromSensorRegister(uint8_t* reg, uint8_t* buffer)
+bool readFromSensorRegister(LDD_TDeviceData* i2c_component, uint8_t* reg, uint8_t* buffer)
 {
 	LDD_TError error;
 	dataI2CSent = FALSE;

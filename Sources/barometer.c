@@ -19,27 +19,25 @@
 /* User includes */
 #include "barometer.h"
 
-bool initBarometer(LDD_DeviceData* i2c_component)
+bool initBarometer(LDD_TDeviceData* i2c_component)
 {
 	bool result = TRUE;
-	CI2C1_SelectSlaveDevice(i2c_component,LDD_I2C_ADDRTYPE_7BITS,BAR_ADDRESS);
 	result &= writeInSensorRegister(&BAR_CTRL_REG1, &INIT_ALTI);
 	result &= writeInSensorRegister(&BAR_FLAG_REG, &INIT_FLAGS);
 	result &= writeInSensorRegister(&BAR_CTRL_REG1, &ACTIVE_MODE);
 	return result;
 }
 
-bool newBarometerDataAvailable(LDD_DeviceData* i2c_component)
+bool newBarometerDataAvailable(LDD_TDeviceData* i2c_component)
 {
 	bool result;
 	uint8_t value;
-	CI2C1_SelectSlaveDevice(i2c_component,LDD_I2C_ADDRTYPE_7BITS,BAR_ADDRESS);
 	result = readFromSensorRegister(&BAR_STATUS_REG,&value);
 	if(value & BAR_MASK_STATUS) return result;
 	return FALSE;
 }
 
-bool readAltitude(LDD_DeviceData* i2c_component, uint8_t* buffer)
+bool readAltitude(LDD_TDeviceData* i2c_component, int8_t* buffer)
 {
 	bool result = TRUE;
 	while(!newBarometerDataAvailable(i2c_component)) {}
@@ -49,8 +47,11 @@ bool readAltitude(LDD_DeviceData* i2c_component, uint8_t* buffer)
 	return result;
 }
 
-float convertQ16-4toFloat(uint8_t* q164_tab)
+float convertQ164toFloat(int8_t* q164_tab)
 {
 	float result;
-	int32_t q164Concat =
+	int32_t q164Concat = q164_tab[0] * 131072 + q164_tab[1] * 512 + q164_tab[2]; //131072 = 2^17
+	result = (float) q164Concat;
+	result *= 0.0625; //Because 0.0625 = 2^-4 and 4 is the number of fractional bits
+	return result;
 }
