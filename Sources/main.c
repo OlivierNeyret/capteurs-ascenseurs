@@ -79,6 +79,7 @@ int main(void)
 		//readAcceleration(i2c_component);
 		CI2C1_SelectSlaveDevice(i2c_component,LDD_I2C_ADDRTYPE_7BITS,BAR_ADDRESS);
 		readAltitude(i2c_component, buffer_bar);
+		altitude = convertQ164toFloat(buffer_bar);
 	}
 	/*** Don't write any code pass this line, or it will be deleted during code generation. ***/
   /*** RTOS startup code. Macro PEX_RTOS_START is defined by the RTOS component. DON'T MODIFY THIS CODE!!! ***/

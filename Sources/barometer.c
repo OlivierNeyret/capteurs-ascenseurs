@@ -50,7 +50,7 @@ bool readAltitude(LDD_TDeviceData* i2c_component, int8_t* buffer)
 float convertQ164toFloat(int8_t* q164_tab)
 {
 	float result;
-	int32_t q164Concat = q164_tab[0] * 131072 + q164_tab[1] * 512 + q164_tab[2]; //131072 = 2^17
+	int32_t q164Concat = q164_tab[0] * 4096 + q164_tab[1] * 16 + q164_tab[2]; //les multiplications permettent de caler correctement les valeurs du tableau
 	result = (float) q164Concat;
 	result *= 0.0625; //Because 0.0625 = 2^-4 and 4 is the number of fractional bits
 	return result;
