@@ -34,7 +34,7 @@
 #include "PE_Const.h"
 #include "IO_Map.h"
 #include "CI2C1.h"
-#include "Pins1.h"
+#include "CAN1.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -95,6 +95,48 @@ void CI2C1_OnMasterBlockSent(LDD_TUserData *UserDataPtr);
 */
 /* ===================================================================*/
 void CI2C1_OnMasterBlockReceived(LDD_TUserData *UserDataPtr);
+
+/*
+** ===================================================================
+**     Event       :  CAN1_OnFreeTxBuffer (module Events)
+**
+**     Component   :  CAN1 [CAN_LDD]
+*/
+/*!
+**     @brief
+**         This event is called when the buffer is empty after a
+**         successful transmit of a message. This event is available
+**         only if method SendFrame is enabled.
+**     @param
+**         UserDataPtr     - Pointer to the user or
+**                           RTOS specific data. This pointer is passed
+**                           as the parameter of Init method.
+**     @param
+**         BufferIdx       - Receive message buffer index.
+*/
+/* ===================================================================*/
+void CAN1_OnFreeTxBuffer(LDD_TUserData *UserDataPtr, LDD_CAN_TMBIndex BufferIdx);
+
+/*
+** ===================================================================
+**     Event       :  CAN1_OnFullRxBuffer (module Events)
+**
+**     Component   :  CAN1 [CAN_LDD]
+*/
+/*!
+**     @brief
+**         This event is called when the buffer is full after a
+**         successful receive a message. This event is available only
+**         if method ReadFrame or SetRxBufferState is enabled.
+**     @param
+**         UserDataPtr     - Pointer to the user or
+**                           RTOS specific data. This pointer is passed
+**                           as the parameter of Init method.
+**     @param
+**         BufferIdx       - Transmit buffer index.
+*/
+/* ===================================================================*/
+void CAN1_OnFullRxBuffer(LDD_TUserData *UserDataPtr, LDD_CAN_TMBIndex BufferIdx);
 
 /* END Events */
 

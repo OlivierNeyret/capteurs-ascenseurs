@@ -4,13 +4,13 @@
 /*##                                   */
 /*##     Filename  : ProcessorExpert.ld */
 /*##                                   */
-/*##     Project   : Capteurs Ascenseur */
+/*##     Project   : capteurs-ascenseurs */
 /*##                                   */
 /*##     Processor : MK64FN1M0VLL12    */
 /*##                                   */
 /*##     Compiler  : GNU C Compiler    */
 /*##                                   */
-/*##     Date/Time : 2017-02-10, 15:54, # CodeGen: 1 */
+/*##     Date/Time : 2017-03-03, 18:00, # CodeGen: 0 */
 /*##                                   */
 /*##     Abstract  :                   */
 /*##                                   */

@@ -31,6 +31,7 @@
 #include "Cpu.h"
 #include "Events.h"
 #include "CI2C1.h"
+#include "CAN1.h"
 /* Including shared modules, which are used for whole project */
 #include "PE_Types.h"
 #include "PE_Error.h"
@@ -55,6 +56,12 @@ LDD_DeviceData* i2c_component;
 volatile bool dataI2CSent = FALSE;
 volatile bool dataI2CReceived = FALSE;
 
+volatile bool DataFrameTxFlg;
+LDD_TDeviceData *can_component;
+LDD_TError Error;
+LDD_CAN_TFrame Frame;
+uint8_t OutData[4] = {0x00U, 0x01U, 0x02U, 0x03U};                /* Initialization of output data buffer */
+
 /*lint -save  -e970 Disable MISRA rule (6.3) checking. */
 int main(void)
 /*lint -restore Enable MISRA rule (6.3) checking. */
@@ -62,6 +69,7 @@ int main(void)
 	/* Write your local variable definition here */
 	uint8_t buffer_acc[];
 	uint8_t buffer_bar[3];
+	can_component = CAN2_Init(NULL);                                     /* Initialization of CAN2 component */
 	/*** Processor Expert internal initialization. DON'T REMOVE THIS CODE!!! ***/
 	PE_low_level_init();
 	/*** End of Processor Expert internal initialization.                    ***/
@@ -77,6 +85,16 @@ int main(void)
 		CI2C1_SelectSlaveDevice(i2c_component,LDD_I2C_ADDRTYPE_7BITS,BAR_ADDRESS);
 		readAltitude(buffer_bar);
 	}
+
+	Frame.MessageID = 0x123U;                                       /* Set Tx ID value - standard */
+	Frame.FrameType = LDD_CAN_DATA_FRAME;                           /* Specyfying type of Tx frame - Data frame */
+	Frame.Length = sizeof(OutData);                                 /* Set number of bytes in data frame - 4B */
+	Frame.Data = OutData;                                           /* Set pointer to OutData buffer */
+	DataFrameTxFlg = FALSE;                                         /* Initialization of DataFrameTxFlg */
+	Error = CAN2_SendFrame(can_component, 0U, &Frame);                   /* Sends the data frame over buffer 0 */
+	while (!DataFrameTxFlg) {                                       /* Wait until data frame is transmitted */
+	}
+
 	/*** Don't write any code pass this line, or it will be deleted during code generation. ***/
   /*** RTOS startup code. Macro PEX_RTOS_START is defined by the RTOS component. DON'T MODIFY THIS CODE!!! ***/
   #ifdef PEX_RTOS_START
