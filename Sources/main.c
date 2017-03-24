@@ -94,11 +94,16 @@ int main(void)
 		readAcceleration(acceleration2);
 
 
+		// -> EN VRAI ; CALCULER LA VITESSE AVEC LA DIFFERENCE DE TEMPS ENTRE DEUX ALTITUDES
+		// OU CONNAITRE LA VITESSE INITIALE
+
 		/* Data processing */
 
 		//Correction de l'accélération
 
 		// -> calculer vitesse en fonction du temps
+		// a(t) = ((a2-a1)/deltaT) * t + a0
+		// v(t) = 0.5 * ((a2-a1)/deltaT) * t^2 + a0 * t + v0
 		// -> calculer vitesse instantanée
 
 		// calcul position ?
