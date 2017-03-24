@@ -46,8 +46,8 @@
 #define ACC_REG_SIZE 0x00 //to be change
 
 
-bool writeInSensorRegister(LDD_TDeviceData* i2c_component, uint8_t* reg, uint8_t* value);
-bool readFromSensorRegister(LDD_TDeviceData* i2c_component, uint8_t* reg, uint8_t* buffer);
+bool writeInSensorRegister(LDD_TDeviceData* i2c_component, uint8_t* sensor, uint8_t* reg, uint8_t* value);
+bool readFromSensorRegister(LDD_TDeviceData* i2c_component, uint8_t* sensor, uint8_t* reg, uint8_t* buffer);
 
 volatile bool dataI2CSent = FALSE;
 volatile bool dataI2CReceived = FALSE;
@@ -62,6 +62,9 @@ int main(void)
 	int8_t buffer_bar[3];
 
 	float altitude; //Altitude in meters
+	float acceleration1[3]; //Acceleration in g, [0] -> X, [1] -> Y, [2] -> Z
+	float acceleration2[3]; //same
+
 	/*** Processor Expert internal initialization. DON'T REMOVE THIS CODE!!! ***/
 	PE_low_level_init();
 	/*** End of Processor Expert internal initialization.                    ***/
@@ -75,11 +78,30 @@ int main(void)
 	initAccelerometer();
 	while(1)
 	{
-		CI2C1_SelectSlaveDevice(i2c_component,LDD_I2C_ADDRTYPE_7BITS,ACC_ADDRESS);
-		//readAcceleration();
+		/* Data acquisition */
 		CI2C1_SelectSlaveDevice(i2c_component,LDD_I2C_ADDRTYPE_7BITS,BAR_ADDRESS);
 		readAltitude(buffer_bar);
 		altitude = convertQ164toFloat(buffer_bar);
+
+		CI2C1_SelectSlaveDevice(i2c_component,LDD_I2C_ADDRTYPE_7BITS,ACC_ADDRESS);
+
+
+		readAcceleration(acceleration1);
+		// -> mesurer difference temporelle
+		readAcceleration(acceleration2);
+
+
+		/* Data processing */
+
+		//Correction de l'accélération
+
+		// -> calculer vitesse en fonction du temps
+		// -> calculer vitesse instantanée
+
+		// calcul position ?
+		// -> integration de la vitesse ou utilisation du barometre ?
+
+		/* Send results on CAN bus */
 	}
 	/*** Don't write any code pass this line, or it will be deleted during code generation. ***/
   /*** RTOS startup code. Macro PEX_RTOS_START is defined by the RTOS component. DON'T MODIFY THIS CODE!!! ***/
@@ -94,7 +116,7 @@ int main(void)
 
 /* END main */
 
-bool writeInSensorRegister(LDD_TDeviceData* i2c_component, uint8_t* reg, uint8_t* value)
+bool writeInSensorRegister(LDD_TDeviceData* i2c_component, uint8_t* sensor, uint8_t* reg, uint8_t* value)
 {
 	LDD_TError error;
 	dataI2CSent = FALSE;
@@ -108,15 +130,40 @@ bool writeInSensorRegister(LDD_TDeviceData* i2c_component, uint8_t* reg, uint8_t
 	return FALSE;
 }
 
-bool readFromSensorRegister(LDD_TDeviceData* i2c_component, uint8_t* reg, uint8_t* buffer)
+bool readFromSensorRegister(LDD_TDeviceData* i2c_component, uint8_t* sensor, uint8_t* reg, uint8_t* buffer)
 {
 	LDD_TError error;
+	dataI2CSent = FALSE;
+	error = CI2C1_MasterSendBlock(i2c_component, sensor, 1U, LDD_I2C_NO_SEND_STOP);
+	while (!dataI2CSent) {}
 	dataI2CSent = FALSE;
 	error = CI2C1_MasterSendBlock(i2c_component, reg, 1U, LDD_I2C_NO_SEND_STOP);
 	while (!dataI2CSent) {}
 	dataI2CSent = FALSE;
 	error = CI2C1_MasterReceiveBlock(i2c_component, buffer, 1U, LDD_I2C_SEND_STOP);
 	while (!dataI2CReceived) {}
+	dataI2CSent = FALSE;
+	if(error == ERR_OK) return TRUE;
+	return FALSE;
+}
+
+bool multipleRead(LDD_TDeviceData* i2c_component, uint8_t* sensor, uint8_t* reg, uint8_t* buffer, uint8_t nbOfRead)
+{
+	LDD_TError error;
+	dataI2CSent = FALSE;
+	int i;
+	error = CI2C1_MasterSendBlock(i2c_component, sensor, 1U, LDD_I2C_NO_SEND_STOP);
+	while (!dataI2CSent) {}
+	dataI2CSent = FALSE;
+	error = CI2C1_MasterSendBlock(i2c_component, reg, 1U, LDD_I2C_NO_SEND_STOP);
+	while (!dataI2CSent) {}
+	dataI2CSent = FALSE;
+	for(i=0;i<nbOfRead;i++)
+	{
+		error = CI2C1_MasterReceiveBlock(i2c_component, buffer, 1U, LDD_I2C_SEND_STOP);
+		while (!dataI2CReceived) {}
+		dataI2CSent = FALSE;
+	}
 	if(error == ERR_OK) return TRUE;
 	return FALSE;
 }

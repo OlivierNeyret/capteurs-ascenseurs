@@ -25,5 +25,7 @@ static const uint8_t RANGE_8G = 0x02;
 static const uint8_t ACC_MASK_STATUS = 0x08;
 
 bool initAccelerometer();
+bool newAccelerationAvailable();
+bool readAcceleration(int8_t* buffer);
 
 #endif /* SOURCES_ACCELEROMETER_H_ */
