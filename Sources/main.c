@@ -65,7 +65,7 @@ int main(void)
 	float acceleration1[3]; //Acceleration in g, [0] -> X, [1] -> Y, [2] -> Z
 	float acceleration2[3]; //same
 
-	uint16_t timeBetweenMesurement;
+	LDD_RealTime_Tfloat timeBetweenMesurement;
 
 	/*** Processor Expert internal initialization. DON'T REMOVE THIS CODE!!! ***/
 	PE_low_level_init();
@@ -73,6 +73,7 @@ int main(void)
 
 	/* Write your code here */
 	/* For example: for(;;) { } */
+	LDD_TDeviceData* TimerAcc = RT1_Init(NULL); // timer init
 	i2c_component = CI2C1_Init(NULL);
 	CI2C1_SelectSlaveDevice(i2c_component,LDD_I2C_ADDRTYPE_7BITS,BAR_ADDRESS);
 	initBarometer();
@@ -88,11 +89,12 @@ int main(void)
 		CI2C1_SelectSlaveDevice(i2c_component,LDD_I2C_ADDRTYPE_7BITS,ACC_ADDRESS);
 
 
+		RT1_Enable(TimerAcc);// enable timer
 		readAcceleration(acceleration1);
-		// -> mesurer difference temporelle
-		// mettre le resultat dans timeBetweenMesurement
 		readAcceleration(acceleration2);
-
+		RT1_Disable(TimerAcc);//disable timer
+		RT1_GetTimeReal(TimerAcc, timeBetweenMesurement);//read timer
+		RT1_Reset(TimerAcc);//reset timer
 
 		/* Data processing */
 
