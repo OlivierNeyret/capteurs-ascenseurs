@@ -65,6 +65,8 @@ int main(void)
 	float acceleration1[3]; //Acceleration in g, [0] -> X, [1] -> Y, [2] -> Z
 	float acceleration2[3]; //same
 
+	uint16_t timeBetweenMesurement;
+
 	/*** Processor Expert internal initialization. DON'T REMOVE THIS CODE!!! ***/
 	PE_low_level_init();
 	/*** End of Processor Expert internal initialization.                    ***/
@@ -88,6 +90,7 @@ int main(void)
 
 		readAcceleration(acceleration1);
 		// -> mesurer difference temporelle
+		// mettre le resultat dans timeBetweenMesurement
 		readAcceleration(acceleration2);
 
 
