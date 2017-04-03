@@ -88,11 +88,11 @@ int main(void)
 
 		CI2C1_SelectSlaveDevice(i2c_component,LDD_I2C_ADDRTYPE_7BITS,ACC_ADDRESS);
 
-
-		RT1_Enable(TimerAcc);// enable timer
 		readAcceleration(acceleration1);
+		RT1_Enable(TimerAcc);// enable timer
 		readAcceleration(acceleration2);
 		RT1_Disable(TimerAcc);//disable timer
+
 		RT1_GetTimeReal(TimerAcc, timeBetweenMesurement);//read timer
 		RT1_Reset(TimerAcc);//reset timer
 
