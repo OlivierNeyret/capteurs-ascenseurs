@@ -24,7 +24,7 @@ static const uint8_t INIT_ALTI = 0x80; // activate the altimeter mode, sensor st
 static const uint8_t INIT_FLAGS = 0x06; // flag will be raised when a new altitude data is available
 static const uint8_t ACTIVE_MODE = 0x81; // altimeter mode and active mode
 
-static const uint8_t BAR_MASK_STATUS = 0x08;
+static const uint8_t BAR_MASK_STATUS = 0x04;
 
 bool initBarometer();
 bool newBarometerDataAvailable();
