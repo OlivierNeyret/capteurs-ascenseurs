@@ -69,7 +69,7 @@ int main(void)
 	/* Write your local variable definition here */
 	uint8_t buffer_acc[];
 	uint8_t buffer_bar[3];
-	can_component = CAN2_Init(NULL);                                     /* Initialization of CAN2 component */
+	can_component = CAN0_Init(NULL);                                     /* Initialization of CAN0 component */
 	/*** Processor Expert internal initialization. DON'T REMOVE THIS CODE!!! ***/
 	PE_low_level_init();
 	/*** End of Processor Expert internal initialization.                    ***/
@@ -91,7 +91,7 @@ int main(void)
 	Frame.Length = sizeof(OutData);                                 /* Set number of bytes in data frame - 4B */
 	Frame.Data = OutData;                                           /* Set pointer to OutData buffer */
 	DataFrameTxFlg = FALSE;                                         /* Initialization of DataFrameTxFlg */
-	Error = CAN2_SendFrame(can_component, 0U, &Frame);                   /* Sends the data frame over buffer 0 */
+	Error = CAN0_SendFrame(can_component, 0U, &Frame);                   /* Sends the data frame over buffer 0 */
 	while (!DataFrameTxFlg) {                                       /* Wait until data frame is transmitted */
 	}
 
