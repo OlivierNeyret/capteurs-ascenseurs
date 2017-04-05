@@ -26,9 +26,9 @@ static const uint8_t ACTIVE_MODE = 0x81; // altimeter mode and active mode
 
 static const uint8_t BAR_MASK_STATUS = 0x04;
 
-bool initBarometer();
-bool newBarometerDataAvailable();
-bool readAltitude(int8_t* buffer);
+bool initBarometer(LDD_TDeviceData* i2c_component);
+bool newBarometerDataAvailable(LDD_TDeviceData* i2c_component);
+bool readAltitude(LDD_TDeviceData* i2c_component, int8_t* buffer);
 float convertQ164toFloat(int8_t* q164_tab);
 
 #endif /* SOURCES_BAROMETER_H_ */

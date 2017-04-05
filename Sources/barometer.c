@@ -19,31 +19,31 @@
 /* User includes */
 #include "barometer.h"
 
-bool initBarometer()
+bool initBarometer(LDD_TDeviceData* i2c_component)
 {
 	bool result = TRUE;
-	result &= writeInSensorRegister(&BAR_CTRL_REG1, &INIT_ALTI);
-	result &= writeInSensorRegister(&BAR_FLAG_REG, &INIT_FLAGS);
-	result &= writeInSensorRegister(&BAR_CTRL_REG1, &ACTIVE_MODE);
+	result &= writeInSensorRegister(i2c_component, &BAR_CTRL_REG1, &INIT_ALTI);
+	result &= writeInSensorRegister(i2c_component, &BAR_FLAG_REG, &INIT_FLAGS);
+	result &= writeInSensorRegister(i2c_component, &BAR_CTRL_REG1, &ACTIVE_MODE);
 	return result;
 }
 
-bool newBarometerDataAvailable()
+bool newBarometerDataAvailable(LDD_TDeviceData* i2c_component)
 {
 	bool result;
 	uint8_t value;
-	result = readFromSensorRegister(&BAR_STATUS_REG,&value);
+	result = readFromSensorRegister(i2c_component, &BAR_STATUS_REG,&value);
 	if(value & BAR_MASK_STATUS) return result;
 	return FALSE;
 }
 
-bool readAltitude(int8_t* buffer)
+bool readAltitude(LDD_TDeviceData* i2c_component, int8_t* buffer)
 {
 	bool result = TRUE;
-	while(!newBarometerDataAvailable()) {}
-	result &= readFromSensorRegister(&BAR_DATA_MSB,buffer);
-	result &= readFromSensorRegister(&BAR_DATA_CSB,buffer+1);
-	result &= readFromSensorRegister(&BAR_DATA_LSB,buffer+2);
+	while(!newBarometerDataAvailable(i2c_component)) {}
+	result &= readFromSensorRegister(i2c_component, &BAR_DATA_MSB,buffer);
+	result &= readFromSensorRegister(i2c_component, &BAR_DATA_CSB,buffer+1);
+	result &= readFromSensorRegister(i2c_component, &BAR_DATA_LSB,buffer+2);
 	buffer[2] = buffer[2] >> 4;
 	return result;
 }

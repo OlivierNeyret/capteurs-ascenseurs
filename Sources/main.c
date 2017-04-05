@@ -46,7 +46,7 @@
 #define ACC_REG_SIZE 0x00 //to be change
 
 
-bool writeInSensorRegister(LDD_TDeviceData* i2c_component, uint8_t* sensor, uint8_t* reg, uint8_t* value);
+bool writeInSensorRegister(LDD_TDeviceData* i2c_component, uint8_t* reg, uint8_t* value);
 bool readFromSensorRegister(LDD_TDeviceData* i2c_component, uint8_t* sensor, uint8_t* reg, uint8_t* buffer);
 
 volatile bool dataI2CSent = FALSE;
@@ -75,23 +75,23 @@ int main(void)
 	/* For example: for(;;) { } */
 	i2c_component = CI2C1_Init(NULL);
 	CI2C1_SelectSlaveDevice(i2c_component,LDD_I2C_ADDRTYPE_7BITS,BAR_ADDRESS);
-	initBarometer();
+	initBarometer(i2c_component);
 	CI2C1_SelectSlaveDevice(i2c_component,LDD_I2C_ADDRTYPE_7BITS,ACC_ADDRESS);
-	initAccelerometer();
+	initAccelerometer(i2c_component);
 	while(1)
 	{
 		/* Data acquisition */
 		CI2C1_SelectSlaveDevice(i2c_component,LDD_I2C_ADDRTYPE_7BITS,BAR_ADDRESS);
-		readAltitude(buffer_bar);
+		readAltitude(i2c_component,buffer_bar);
 		altitude = convertQ164toFloat(buffer_bar);
 
 		CI2C1_SelectSlaveDevice(i2c_component,LDD_I2C_ADDRTYPE_7BITS,ACC_ADDRESS);
 
 
-		readAcceleration(acceleration1);
+		readAcceleration(i2c_component,acceleration1);
 		// -> mesurer difference temporelle
 		// mettre le resultat dans timeBetweenMesurement
-		readAcceleration(acceleration2);
+		readAcceleration(i2c_component,acceleration2);
 
 
 		// -> EN VRAI ; CALCULER LA VITESSE AVEC LA DIFFERENCE DE TEMPS ENTRE DEUX ALTITUDES
@@ -124,7 +124,7 @@ int main(void)
 
 /* END main */
 
-bool writeInSensorRegister(LDD_TDeviceData* i2c_component, uint8_t* sensor, uint8_t* reg, uint8_t* value)
+bool writeInSensorRegister(LDD_TDeviceData* i2c_component, uint8_t* reg, uint8_t* value)
 {
 	LDD_TError error;
 	dataI2CSent = FALSE;
@@ -138,12 +138,9 @@ bool writeInSensorRegister(LDD_TDeviceData* i2c_component, uint8_t* sensor, uint
 	return FALSE;
 }
 
-bool readFromSensorRegister(LDD_TDeviceData* i2c_component, uint8_t* sensor, uint8_t* reg, uint8_t* buffer)
+bool readFromSensorRegister(LDD_TDeviceData* i2c_component, uint8_t* reg, uint8_t* buffer)
 {
 	LDD_TError error;
-	dataI2CSent = FALSE;
-	error = CI2C1_MasterSendBlock(i2c_component, sensor, 1U, LDD_I2C_NO_SEND_STOP);
-	while (!dataI2CSent) {}
 	dataI2CSent = FALSE;
 	error = CI2C1_MasterSendBlock(i2c_component, reg, 1U, LDD_I2C_NO_SEND_STOP);
 	while (!dataI2CSent) {}

@@ -24,8 +24,9 @@ static const uint8_t RANGE_4G = 0x01;
 static const uint8_t RANGE_8G = 0x02;
 static const uint8_t ACC_MASK_STATUS = 0x08;
 
-bool initAccelerometer();
-bool newAccelerationAvailable();
-bool readAcceleration(int8_t* buffer);
+bool initAccelerometer(LDD_TDeviceData* i2c_component);
+bool newAccelerationAvailable(LDD_TDeviceData* i2c_component);
+bool readAcceleration(LDD_TDeviceData* i2c_component, int8_t* buffer);
+float convert(uint8_t* tab);
 
 #endif /* SOURCES_ACCELEROMETER_H_ */
