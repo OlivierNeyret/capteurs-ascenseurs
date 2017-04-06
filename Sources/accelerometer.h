@@ -24,6 +24,14 @@ static const uint8_t RANGE_4G = 0x01;
 static const uint8_t RANGE_8G = 0x02;
 static const uint8_t ACC_MASK_STATUS = 0x08;
 
+//Addresses of data register
+static const uint8_t ACC_X_MSB = 0x01;
+static const uint8_t ACC_X_LSB = 0x02;
+static const uint8_t ACC_Y_MSB = 0x03;
+static const uint8_t ACC_Y_LSB = 0x04;
+static const uint8_t ACC_Z_MSB = 0x05;
+static const uint8_t ACC_Z_LSB = 0x06;
+
 bool initAccelerometer(LDD_TDeviceData* i2c_component);
 bool newAccelerationAvailable(LDD_TDeviceData* i2c_component);
 bool readAcceleration(LDD_TDeviceData* i2c_component, int8_t* buffer);

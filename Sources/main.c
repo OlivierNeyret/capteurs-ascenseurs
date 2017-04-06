@@ -123,13 +123,14 @@ int main(void)
 		dataToSend = (char*) (&vitesse);
 
 		//Frame construction
-		Frame.MessageID = 0x123U;                                       /* Set Tx ID value - standard */
-		Frame.FrameType = LDD_CAN_DATA_FRAME;                           /* Specyfying type of Tx frame - Data frame */
-		Frame.Length = 4;                             				    /* Set number of bytes in data frame - 4B */
-		Frame.Data = dataToSend;                                        /* Set pointer to OutData buffer */
-		DataFrameTxFlg = FALSE;                                         /* Initialization of DataFrameTxFlg */
-		CAN1_SendFrame(can_component, 0U, &Frame);    				    /* Sends the data frame over buffer 0 */
-		while (!DataFrameTxFlg) {}                                      /* Wait until data frame is transmitted */
+		//Modifier le MessageID avec le truc dans "component inspector" - message buffer
+		Frame.MessageID = 0x123U;						/* Set Tx ID value - standard */
+		Frame.FrameType = LDD_CAN_DATA_FRAME;           /* Specyfying type of Tx frame - Data frame */
+		Frame.Length = 4;                             	/* Set number of bytes in data frame - 4B */
+		Frame.Data = dataToSend;                        /* Set pointer to OutData buffer */
+		DataFrameTxFlg = FALSE;                         /* Initialization of DataFrameTxFlg */
+		CAN1_SendFrame(can_component, 0U, &Frame);      /* Sends the data frame over buffer 0 */
+		while (!DataFrameTxFlg) {}                      /* Wait until data frame is transmitted */
 		DataFrameTxFlg = FALSE;
 	}
 	/*** Don't write any code pass this line, or it will be deleted during code generation. ***/
@@ -169,27 +170,6 @@ bool readFromSensorRegister(LDD_TDeviceData* i2c_component, uint8_t* reg, uint8_
 	error = CI2C1_MasterReceiveBlock(i2c_component, buffer, 1U, LDD_I2C_SEND_STOP);
 	while (!dataI2CReceived) {}
 	dataI2CSent = FALSE;
-	if(error == ERR_OK) return TRUE;
-	return FALSE;
-}
-
-bool multipleRead(LDD_TDeviceData* i2c_component, uint8_t* sensor, uint8_t* reg, uint8_t* buffer, uint8_t nbOfRead)
-{
-	LDD_TError error;
-	dataI2CSent = FALSE;
-	int i;
-	error = CI2C1_MasterSendBlock(i2c_component, sensor, 1U, LDD_I2C_NO_SEND_STOP);
-	while (!dataI2CSent) {}
-	dataI2CSent = FALSE;
-	error = CI2C1_MasterSendBlock(i2c_component, reg, 1U, LDD_I2C_NO_SEND_STOP);
-	while (!dataI2CSent) {}
-	dataI2CSent = FALSE;
-	for(i=0;i<nbOfRead;i++)
-	{
-		error = CI2C1_MasterReceiveBlock(i2c_component, buffer, 1U, LDD_I2C_SEND_STOP);
-		while (!dataI2CReceived) {}
-		dataI2CSent = FALSE;
-	}
 	if(error == ERR_OK) return TRUE;
 	return FALSE;
 }

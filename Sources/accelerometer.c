@@ -46,7 +46,12 @@ bool readAcceleration(LDD_TDeviceData* i2c_component, int8_t* buffer)
 {
 	bool result = TRUE;
 	while(!newAccelerationAvailable(i2c_component)) {}
-	//TODO: verifier comment fonctionne la lecture multi registre
+	result &= readFromSensorRegister(i2c_component, &ACC_X_MSB,buffer);
+	result &= readFromSensorRegister(i2c_component, &ACC_X_LSB,buffer+1);
+	result &= readFromSensorRegister(i2c_component, &ACC_Y_MSB,buffer+2);
+	result &= readFromSensorRegister(i2c_component, &ACC_Y_LSB,buffer+3);
+	result &= readFromSensorRegister(i2c_component, &ACC_Z_MSB,buffer+4);
+	result &= readFromSensorRegister(i2c_component, &ACC_Z_LSB,buffer+5);
 	return result;
 }
 
