@@ -30,6 +30,47 @@ Module "CI2C1"     (component I2C_LDD)
                 call value. Any send or receive method directs to or from selected device, until a new slave device is selected 
                 by this method. This method is available for the MASTER mode.
 
+Module "TU1"       (component TimerUnit_LDD)
+   - TU1_Init -Initializes the device. Allocates memory for the device data structure, allocates interrupt vectors and sets 
+                interrupt priority, sets pin routing, sets timing, etc. If the property <"Enable in init. code"> is set to 
+                "yes" value then the device is also enabled (see the description of the <Enable> method). In this case the 
+                <Enable> method is not necessary and needn't to be generated. This method can be called only once. Before the 
+                second call of Init the <Deinit> must be called first.
+   - TU1_Enable -Enables the component - it starts the signal generation. Events may be generated (see SetEventMask). The 
+                method is not available if the counter can't be disabled/enabled by HW.
+   - TU1_Disable -Disables the component - it stops signal generation and events calling. The method is not available if the 
+                counter can't be disabled/enabled by HW.
+   - TU1_SetEventMask -Enables/disables event(s). The events contained within the mask are enabled. Events not contained within 
+                the mask are disabled. The component event masks are defined in the PE_Types.h file. Note: Event that are not 
+                generated (See the "Events" tab in the Component inspector) are not handled by this method. In this case the 
+                method returns ERR_PARAM_MASK error code. See also method <GetEventMask>.
+   - TU1_ResetCounter -Resets counter. If counter is counting up then it is set to zero. If counter is counting down then 
+                counter is updated to the reload value.   The method is not available if HW doesn't allow resetting of the 
+                counter.
+
+Module "RT1"       (component RealTime_LDD)
+   - RT1_Init -Initializes the device. Allocates memory for the device data structure, allocates interrupt vectors and sets 
+                interrupt priority, sets pin routing, sets timing, etc. If the property <"Enable in init. code"> is set to 
+                "yes" value then the device is also enabled (see the description of the <Enable> method). In this case the 
+                <Enable> method is not necessary and needn't to be generated. This method can be called only once. Before the 
+                second call of Init the <Deinit> must be called first.
+   - RT1_Enable -Enables the component - the internal clocks are counted.
+   - RT1_Reset -This method resets software counter.
+   - RT1_GetTimeMS -This method returns the time (as a 16-bit unsigned integer) in milliseconds since the last Reset method 
+                call.
+   - RT1_GetTimeReal -This method returns the time (as a floating point) in seconds since the last Reset method call.
+
+Module "CAN1"      (component CAN_LDD)
+   - CAN1_Init -Initializes the device. Allocates memory for the device data structure, allocates interrupt vectors and sets 
+                interrupt priority, sets pin routing, sets timing, etc. If the "Enable in init. code" is set to "yes" value 
+                then the device is also enabled(see the description of the Enable() method). In this case the Enable() method 
+                is not necessary and needn't to be generated.
+   - CAN1_SetRxBufferID -Sets the ID of the receive message buffer specified by the parameter BufferIdx.
+   - CAN1_SendFrame -Sends a frame via the CAN device. This method allow to specify CAN buffer number, message ID, data to be 
+                sent, frame type and whether the message will be sent after the request comes.
+   - CAN1_ReadFrame -Reads a frame from the CAN device. The user is informed about CAN reception through OnFullRxBuffer event 
+                or GetStateRX method.
+
 Module "Cpu"       (component MK64FN1M0LL12)
    - Cpu_SetClockConfiguration -Calling of this method will cause the clock configuration change and reconfiguration of all 
                 components according to the requested clock configuration setting.

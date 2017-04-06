@@ -29,7 +29,7 @@ bool initAccelerometer(LDD_TDeviceData* i2c_component)
 	result &= writeInSensorRegister(i2c_component, &ACC_CTRL_REG1, &STANDBY_MODE);
 	result &= writeInSensorRegister(i2c_component, &ACC_RANGE_REG, &RANGE_4G);
 	//parametrage du data rate ?
-	result &= writeInSensorRegister(i2c_component, &ACC_CTRL_REG1, &ACTIVE_MODE);
+	result &= writeInSensorRegister(i2c_component, &ACC_CTRL_REG1, &ACTIVE_MODE_ACC);
 	return result;
 }
 
@@ -52,7 +52,7 @@ bool readAcceleration(LDD_TDeviceData* i2c_component, int8_t* buffer)
 
 float convert(uint8_t* tab)
 {
-    float gPerLSB = MODE / 2048.0;
+    float gPerLSB = 4 / 2048.0; //remplacer le 4 par un define MODE
     int16_t concatData;
     if(tab[0]>=8)
     {

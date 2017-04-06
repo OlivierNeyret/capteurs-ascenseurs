@@ -45,6 +45,15 @@ endif
 -include ../makefile.defs
 
 # Add inputs and outputs from these tool invocations to the build variables 
+SECONDARY_FLASH += \
+Capteurs\ Ascensseur.bin \
+
+SECONDARY_LIST += \
+Capteurs\ Ascensseur.lst \
+
+SECONDARY_SIZE += \
+Capteurs\ Ascensseur.siz \
+
 
 # All Target
 all: Capteurs\ Ascensseur.elf secondary-outputs
@@ -57,12 +66,30 @@ Capteurs\ Ascensseur.elf: $(OBJS) $(USER_OBJS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
+Capteurs\ Ascensseur.bin: Capteurs\ Ascensseur.elf
+	@echo 'Invoking: Cross ARM GNU Create Flash Image'
+	arm-none-eabi-objcopy -O binary "Capteurs Ascensseur.elf"  "Capteurs Ascensseur.bin"
+	@echo 'Finished building: $@'
+	@echo ' '
+
+Capteurs\ Ascensseur.lst: Capteurs\ Ascensseur.elf
+	@echo 'Invoking: Cross ARM GNU Create Listing'
+	arm-none-eabi-objdump --source --all-headers --demangle --line-numbers --wide "Capteurs Ascensseur.elf" > "Capteurs Ascensseur.lst"
+	@echo 'Finished building: $@'
+	@echo ' '
+
+Capteurs\ Ascensseur.siz: Capteurs\ Ascensseur.elf
+	@echo 'Invoking: Cross ARM GNU Print Size'
+	arm-none-eabi-size --format=berkeley "Capteurs Ascensseur.elf"
+	@echo 'Finished building: $@'
+	@echo ' '
+
 # Other Targets
 clean:
-	-$(RM) $(C++_DEPS)$(OBJS)$(C_DEPS)$(ASM_DEPS)$(CC_DEPS)$(CPP_DEPS)$(CXX_DEPS)$(C_UPPER_DEPS)$(S_UPPER_DEPS) "Capteurs Ascensseur.elf"
+	-$(RM) $(SECONDARY_SIZE)$(C++_DEPS)$(OBJS)$(C_DEPS)$(ASM_DEPS)$(CC_DEPS)$(SECONDARY_FLASH)$(CPP_DEPS)$(CXX_DEPS)$(C_UPPER_DEPS)$(SECONDARY_LIST)$(S_UPPER_DEPS) "Capteurs Ascensseur.elf"
 	-@echo ' '
 
-secondary-outputs:
+secondary-outputs: $(SECONDARY_FLASH) $(SECONDARY_LIST) $(SECONDARY_SIZE)
 
 .PHONY: all clean dependents
 .SECONDARY:

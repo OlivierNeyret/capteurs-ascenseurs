@@ -6,7 +6,7 @@
 **     Version     : Component 01.046, Driver 01.00, CPU db: 3.00.000
 **     Repository  : Kinetis
 **     Compiler    : GNU C Compiler
-**     Date/Time   : 2017-02-10, 15:54, # CodeGen: 1
+**     Date/Time   : 2017-04-06, 16:16, # CodeGen: 9
 **
 **     Copyright : 1997 - 2015 Freescale Semiconductor, Inc. 
 **     All Rights Reserved.
@@ -63,7 +63,10 @@
 ** Array of initialized device structures of LDD components.
 ** ===========================================================================
 */
-LDD_TDeviceData *PE_LDD_DeviceDataList[1] = {
+LDD_TDeviceData *PE_LDD_DeviceDataList[4] = {
+    NULL,
+    NULL,
+    NULL,
     NULL
   };
 
@@ -188,6 +191,10 @@ bool PE_PeripheralUsed(uint32_t PrphBaseAddress)
   switch (PrphBaseAddress) {
     /* Base address allocated by peripheral(s) I2C0 */
     case 0x40066000UL:
+    /* Base address allocated by peripheral(s) FTM1 */
+    case 0x40039000UL:
+    /* Base address allocated by peripheral(s) CAN0 */
+    case 0x40024000UL:
       result = TRUE;
       break;
     default:
@@ -213,6 +220,18 @@ void LDD_SetClockConfiguration(LDD_TClockConfiguration ClockConfiguration)
   /* Component CI2C1 (I2C_LDD). */
   if (PE_LDD_DeviceDataList[PE_LDD_COMPONENT_CI2C1_ID] != NULL) {
     CI2C1_SetClockConfiguration(PE_LDD_DeviceDataList[PE_LDD_COMPONENT_CI2C1_ID], ClockConfiguration);
+  }
+  /* Component TU1 (TimerUnit_LDD). */
+  if (PE_LDD_DeviceDataList[PE_LDD_COMPONENT_TU1_ID] != NULL) {
+    TU1_SetClockConfiguration(PE_LDD_DeviceDataList[PE_LDD_COMPONENT_TU1_ID], ClockConfiguration);
+  }
+  /* Component RT1 (RealTime_LDD). */
+  if (PE_LDD_DeviceDataList[PE_LDD_COMPONENT_RT1_ID] != NULL) {
+    RT1_SetClockConfiguration(PE_LDD_DeviceDataList[PE_LDD_COMPONENT_RT1_ID], ClockConfiguration);
+  }
+  /* Component CAN1 (CAN_LDD). */
+  if (PE_LDD_DeviceDataList[PE_LDD_COMPONENT_CAN1_ID] != NULL) {
+    CAN1_SetClockConfiguration(PE_LDD_DeviceDataList[PE_LDD_COMPONENT_CAN1_ID], ClockConfiguration);
   }
 }
 

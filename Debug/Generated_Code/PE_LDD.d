@@ -5,7 +5,11 @@ Generated_Code/PE_LDD.o: ../Generated_Code/PE_LDD.c \
  /home/olivier/git/capteurs-ascenseurs/Static_Code/IO_Map/MK64F12.h \
  ../Generated_Code/Cpu.h \
  /home/olivier/git/capteurs-ascenseurs/Static_Code/System/CPU_Init.h \
- /home/olivier/git/capteurs-ascenseurs/Generated_Code/CPU_Config.h
+ /home/olivier/git/capteurs-ascenseurs/Generated_Code/CPU_Config.h \
+ ../Generated_Code/TU1.h \
+ /home/olivier/git/capteurs-ascenseurs/Static_Code/PDD/FTM_PDD.h \
+ /home/olivier/git/capteurs-ascenseurs/Static_Code/PDD/PDD_Types.h \
+ ../Generated_Code/RT1.h ../Generated_Code/CAN1.h
 
 ../Generated_Code/PE_LDD.h:
 
@@ -26,3 +30,13 @@ Generated_Code/PE_LDD.o: ../Generated_Code/PE_LDD.c \
 /home/olivier/git/capteurs-ascenseurs/Static_Code/System/CPU_Init.h:
 
 /home/olivier/git/capteurs-ascenseurs/Generated_Code/CPU_Config.h:
+
+../Generated_Code/TU1.h:
+
+/home/olivier/git/capteurs-ascenseurs/Static_Code/PDD/FTM_PDD.h:
+
+/home/olivier/git/capteurs-ascenseurs/Static_Code/PDD/PDD_Types.h:
+
+../Generated_Code/RT1.h:
+
+../Generated_Code/CAN1.h:

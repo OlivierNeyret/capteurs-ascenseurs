@@ -53,9 +53,12 @@
   </PATHS>
   <FILES>
     <GeneratedCs>
+      <PathName>/home/olivier/git/capteurs-ascenseurs/Generated_Code/CAN1.c</PathName>
       <PathName>/home/olivier/git/capteurs-ascenseurs/Generated_Code/CI2C1.c</PathName>
       <PathName>/home/olivier/git/capteurs-ascenseurs/Generated_Code/Cpu.c</PathName>
       <PathName>/home/olivier/git/capteurs-ascenseurs/Generated_Code/PE_LDD.c</PathName>
+      <PathName>/home/olivier/git/capteurs-ascenseurs/Generated_Code/RT1.c</PathName>
+      <PathName>/home/olivier/git/capteurs-ascenseurs/Generated_Code/TU1.c</PathName>
       <PathName>/home/olivier/git/capteurs-ascenseurs/Project_Settings/Startup_Code/startup.c</PathName>
       <PathName>/home/olivier/git/capteurs-ascenseurs/Sources/Events.c</PathName>
       <PathName>/home/olivier/git/capteurs-ascenseurs/Sources/accelerometer.c</PathName>
@@ -66,6 +69,7 @@
       <PathName>/home/olivier/git/capteurs-ascenseurs/Static_Code/System/Vectors.c</PathName>
     </GeneratedCs>
     <GeneratedHs>
+      <PathName>/home/olivier/git/capteurs-ascenseurs/Generated_Code/CAN1.h</PathName>
       <PathName>/home/olivier/git/capteurs-ascenseurs/Generated_Code/CI2C1.h</PathName>
       <PathName>/home/olivier/git/capteurs-ascenseurs/Generated_Code/CPU_Config.h</PathName>
       <PathName>/home/olivier/git/capteurs-ascenseurs/Generated_Code/Cpu.h</PathName>
@@ -75,6 +79,8 @@
       <PathName>/home/olivier/git/capteurs-ascenseurs/Generated_Code/PE_Error.h</PathName>
       <PathName>/home/olivier/git/capteurs-ascenseurs/Generated_Code/PE_LDD.h</PathName>
       <PathName>/home/olivier/git/capteurs-ascenseurs/Generated_Code/PE_Types.h</PathName>
+      <PathName>/home/olivier/git/capteurs-ascenseurs/Generated_Code/RT1.h</PathName>
+      <PathName>/home/olivier/git/capteurs-ascenseurs/Generated_Code/TU1.h</PathName>
       <PathName>/home/olivier/git/capteurs-ascenseurs/Generated_Code/Vectors_Config.h</PathName>
       <PathName>/home/olivier/git/capteurs-ascenseurs/Sources/Events.h</PathName>
       <PathName>/home/olivier/git/capteurs-ascenseurs/Sources/accelerometer.h</PathName>

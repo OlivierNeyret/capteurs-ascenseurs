@@ -31,6 +31,9 @@
 #include "Cpu.h"
 #include "Events.h"
 #include "CI2C1.h"
+#include "TU1.h"
+#include "RT1.h"
+#include "CAN1.h"
 /* Including shared modules, which are used for whole project */
 #include "PE_Types.h"
 #include "PE_Error.h"
@@ -47,10 +50,11 @@
 
 
 bool writeInSensorRegister(LDD_TDeviceData* i2c_component, uint8_t* reg, uint8_t* value);
-bool readFromSensorRegister(LDD_TDeviceData* i2c_component, uint8_t* sensor, uint8_t* reg, uint8_t* buffer);
+bool readFromSensorRegister(LDD_TDeviceData* i2c_component, uint8_t* reg, uint8_t* buffer);
 
 volatile bool dataI2CSent = FALSE;
 volatile bool dataI2CReceived = FALSE;
+volatile bool DataFrameTxFlg = FALSE;
 
 /*lint -save  -e970 Disable MISRA rule (6.3) checking. */
 int main(void)
@@ -58,14 +62,20 @@ int main(void)
 {
 	/* Write your local variable definition here */
 	LDD_TDeviceData* i2c_component;
+	LDD_TDeviceData* timer_component;
+	LDD_TDeviceData* can_component;
 	uint8_t buffer_acc[6];
 	int8_t buffer_bar[3];
+	LDD_CAN_TFrame Frame;
 
-	float altitude; //Altitude in meters
-	float acceleration1[3]; //Acceleration in g, [0] -> X, [1] -> Y, [2] -> Z
-	float acceleration2[3]; //same
+	float altitude1; //Altitude in meters
+	float altitude2; //Altitude in meters
+	float acceleration[3]; //Acceleration in g, [0] -> X, [1] -> Y, [2] -> Z
+	float vitesse;
 
-	uint16_t timeBetweenMesurement;
+	LDD_RealTime_Tfloat timeBetweenMesurement;
+
+	uint8_t* dataToSend;
 
 	/*** Processor Expert internal initialization. DON'T REMOVE THIS CODE!!! ***/
 	PE_low_level_init();
@@ -73,43 +83,54 @@ int main(void)
 
 	/* Write your code here */
 	/* For example: for(;;) { } */
+	timer_component = RT1_Init(NULL);
 	i2c_component = CI2C1_Init(NULL);
+	can_component = CAN1_Init(NULL);
+
 	CI2C1_SelectSlaveDevice(i2c_component,LDD_I2C_ADDRTYPE_7BITS,BAR_ADDRESS);
 	initBarometer(i2c_component);
 	CI2C1_SelectSlaveDevice(i2c_component,LDD_I2C_ADDRTYPE_7BITS,ACC_ADDRESS);
 	initAccelerometer(i2c_component);
+	RT1_Enable(timer_component);
 	while(1)
 	{
 		/* Data acquisition */
 		CI2C1_SelectSlaveDevice(i2c_component,LDD_I2C_ADDRTYPE_7BITS,BAR_ADDRESS);
 		readAltitude(i2c_component,buffer_bar);
-		altitude = convertQ164toFloat(buffer_bar);
+		altitude1 = convertQ164toFloat(buffer_bar);
+
+		RT1_Reset(timer_component);
+
+		//attendre(0.2);
+
+		readAltitude(i2c_component,buffer_bar);
+		altitude2 = convertQ164toFloat(buffer_bar);
+
+		RT1_GetTimeReal(timer_component, &timeBetweenMesurement);
+
+		vitesse = (altitude2-altitude1)/timeBetweenMesurement;
 
 		CI2C1_SelectSlaveDevice(i2c_component,LDD_I2C_ADDRTYPE_7BITS,ACC_ADDRESS);
+		readAcceleration(i2c_component,buffer_acc);
 
-
-		readAcceleration(i2c_component,acceleration1);
-		// -> mesurer difference temporelle
-		// mettre le resultat dans timeBetweenMesurement
-		readAcceleration(i2c_component,acceleration2);
-
-
-		// -> EN VRAI ; CALCULER LA VITESSE AVEC LA DIFFERENCE DE TEMPS ENTRE DEUX ALTITUDES
-		// OU CONNAITRE LA VITESSE INITIALE
-
-		/* Data processing */
-
-		//Correction de l'accélération
-
-		// -> calculer vitesse en fonction du temps
-		// a(t) = ((a2-a1)/deltaT) * t + a0
-		// v(t) = 0.5 * ((a2-a1)/deltaT) * t^2 + a0 * t + v0
-		// -> calculer vitesse instantanée
-
-		// calcul position ?
-		// -> integration de la vitesse ou utilisation du barometre ?
+		acceleration[0] = convert(buffer_acc);
+		acceleration[1] = convert(buffer_acc+2);
+		acceleration[2] = convert(buffer_acc+4);
 
 		/* Send results on CAN bus */
+
+		//On choisit de n'envoyer que la vitesse
+		dataToSend = (char*) (&vitesse);
+
+		//Frame construction
+		Frame.MessageID = 0x123U;                                       /* Set Tx ID value - standard */
+		Frame.FrameType = LDD_CAN_DATA_FRAME;                           /* Specyfying type of Tx frame - Data frame */
+		Frame.Length = 4;                             				    /* Set number of bytes in data frame - 4B */
+		Frame.Data = dataToSend;                                        /* Set pointer to OutData buffer */
+		DataFrameTxFlg = FALSE;                                         /* Initialization of DataFrameTxFlg */
+		CAN1_SendFrame(can_component, 0U, &Frame);    				    /* Sends the data frame over buffer 0 */
+		while (!DataFrameTxFlg) {}                                      /* Wait until data frame is transmitted */
+		DataFrameTxFlg = FALSE;
 	}
 	/*** Don't write any code pass this line, or it will be deleted during code generation. ***/
   /*** RTOS startup code. Macro PEX_RTOS_START is defined by the RTOS component. DON'T MODIFY THIS CODE!!! ***/

@@ -229,11 +229,11 @@
 			</tr>
 			<tr>
 				<td>42</td><td>CMP2_IN0/PTA12/CAN0_TX/FTM1_CH0/RMII0_RXD1/MII0_RXD1/I2C2_SCL/I2S0_TXD0/FTM1_QD_PHA</td><td><small><i>same</i></small></td>
-				<td></td><td></td><td></td><td></td>
+				<td bgcolor='#AFFF8E'>CAN0</td><td bgcolor='#AFFF8E'>can_txd</td><td bgcolor='#AFFF8E'>alt2</td><td bgcolor='#AFFF8E'>Output</td>
 			</tr>
 			<tr>
 				<td>43</td><td>CMP2_IN1/PTA13/LLWU_P4/CAN0_RX/FTM1_CH1/RMII0_RXD0/MII0_RXD0/I2C2_SDA/I2S0_TX_FS/FTM1_QD_PHB</td><td><small><i>same</i></small></td>
-				<td></td><td></td><td></td><td></td>
+				<td bgcolor='#AFFF8E'>CAN0</td><td bgcolor='#AFFF8E'>can_rxd</td><td bgcolor='#AFFF8E'>alt2</td><td bgcolor='#AFFF8E'>Input</td>
 			</tr>
 			<tr>
 				<td>44</td><td>PTA14/SPI0_PCS0/UART0_TX/RMII0_CRS_DV/MII0_RXDV/I2C2_SCL/I2S0_RX_BCLK/I2S0_TXD1</td><td><small><i>same</i></small></td>
@@ -1915,11 +1915,11 @@
 			</tr>
 			<tr>
 				<td>42</td><td>CMP2_IN0/PTA12/CAN0_TX/FTM1_CH0/RMII0_RXD1/MII0_RXD1/I2C2_SCL/I2S0_TXD0/FTM1_QD_PHA</td><td><small><i>same</i></small></td>
-				<td></td><td></td><td></td><td></td>
+				<td bgcolor='#AFFF8E'>CAN0</td><td bgcolor='#AFFF8E'>can_txd</td><td bgcolor='#AFFF8E'>alt2</td><td bgcolor='#AFFF8E'>Output</td>
 			</tr>
 			<tr>
 				<td>43</td><td>CMP2_IN1/PTA13/LLWU_P4/CAN0_RX/FTM1_CH1/RMII0_RXD0/MII0_RXD0/I2C2_SDA/I2S0_TX_FS/FTM1_QD_PHB</td><td><small><i>same</i></small></td>
-				<td></td><td></td><td></td><td></td>
+				<td bgcolor='#AFFF8E'>CAN0</td><td bgcolor='#AFFF8E'>can_rxd</td><td bgcolor='#AFFF8E'>alt2</td><td bgcolor='#AFFF8E'>Input</td>
 			</tr>
 			<tr>
 				<td>44</td><td>PTA14/SPI0_PCS0/UART0_TX/RMII0_CRS_DV/MII0_RXDV/I2C2_SCL/I2S0_RX_BCLK/I2S0_TXD1</td><td><small><i>same</i></small></td>

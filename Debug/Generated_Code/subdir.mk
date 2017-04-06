@@ -4,19 +4,28 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
+../Generated_Code/CAN1.c \
 ../Generated_Code/CI2C1.c \
 ../Generated_Code/Cpu.c \
-../Generated_Code/PE_LDD.c 
+../Generated_Code/PE_LDD.c \
+../Generated_Code/RT1.c \
+../Generated_Code/TU1.c 
 
 OBJS += \
+./Generated_Code/CAN1.o \
 ./Generated_Code/CI2C1.o \
 ./Generated_Code/Cpu.o \
-./Generated_Code/PE_LDD.o 
+./Generated_Code/PE_LDD.o \
+./Generated_Code/RT1.o \
+./Generated_Code/TU1.o 
 
 C_DEPS += \
+./Generated_Code/CAN1.d \
 ./Generated_Code/CI2C1.d \
 ./Generated_Code/Cpu.d \
-./Generated_Code/PE_LDD.d 
+./Generated_Code/PE_LDD.d \
+./Generated_Code/RT1.d \
+./Generated_Code/TU1.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes

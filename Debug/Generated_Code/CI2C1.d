@@ -13,9 +13,14 @@ Generated_Code/CI2C1.o: ../Generated_Code/CI2C1.c \
  /home/olivier/git/capteurs-ascenseurs/Generated_Code/Cpu.h \
  /home/olivier/git/capteurs-ascenseurs/Static_Code/System/CPU_Init.h \
  /home/olivier/git/capteurs-ascenseurs/Generated_Code/CPU_Config.h \
+ /home/olivier/git/capteurs-ascenseurs/Generated_Code/TU1.h \
+ /home/olivier/git/capteurs-ascenseurs/Static_Code/PDD/FTM_PDD.h \
+ /home/olivier/git/capteurs-ascenseurs/Static_Code/PDD/PDD_Types.h \
+ /home/olivier/git/capteurs-ascenseurs/Generated_Code/RT1.h \
+ /home/olivier/git/capteurs-ascenseurs/Generated_Code/TU1.h \
+ /home/olivier/git/capteurs-ascenseurs/Generated_Code/CAN1.h \
  ../Generated_Code/CI2C1.h \
  /home/olivier/git/capteurs-ascenseurs/Static_Code/PDD/PORT_PDD.h \
- /home/olivier/git/capteurs-ascenseurs/Static_Code/PDD/PDD_Types.h \
  /home/olivier/git/capteurs-ascenseurs/Static_Code/PDD/I2C_PDD.h \
  ../Generated_Code/IO_Map.h
 
@@ -47,11 +52,21 @@ Generated_Code/CI2C1.o: ../Generated_Code/CI2C1.c \
 
 /home/olivier/git/capteurs-ascenseurs/Generated_Code/CPU_Config.h:
 
+/home/olivier/git/capteurs-ascenseurs/Generated_Code/TU1.h:
+
+/home/olivier/git/capteurs-ascenseurs/Static_Code/PDD/FTM_PDD.h:
+
+/home/olivier/git/capteurs-ascenseurs/Static_Code/PDD/PDD_Types.h:
+
+/home/olivier/git/capteurs-ascenseurs/Generated_Code/RT1.h:
+
+/home/olivier/git/capteurs-ascenseurs/Generated_Code/TU1.h:
+
+/home/olivier/git/capteurs-ascenseurs/Generated_Code/CAN1.h:
+
 ../Generated_Code/CI2C1.h:
 
 /home/olivier/git/capteurs-ascenseurs/Static_Code/PDD/PORT_PDD.h:
-
-/home/olivier/git/capteurs-ascenseurs/Static_Code/PDD/PDD_Types.h:
 
 /home/olivier/git/capteurs-ascenseurs/Static_Code/PDD/I2C_PDD.h:
 

@@ -50,6 +50,9 @@
   
 #include "Cpu.h"
 #include "CI2C1.h"
+#include "TU1.h"
+#include "RT1.h"
+#include "CAN1.h"
 #include "Events.h"
 
 #ifdef __cplusplus
@@ -118,7 +121,7 @@ extern "C" {
 #define VECTOR_56         (tIsrFunc)&UnhandledInterrupt         /* 0x38 -    ivINT_CMP0                     unused by PE */
 #define VECTOR_57         (tIsrFunc)&UnhandledInterrupt         /* 0x39 -    ivINT_CMP1                     unused by PE */
 #define VECTOR_58         (tIsrFunc)&UnhandledInterrupt         /* 0x3A -    ivINT_FTM0                     unused by PE */
-#define VECTOR_59         (tIsrFunc)&UnhandledInterrupt         /* 0x3B -    ivINT_FTM1                     unused by PE */
+#define VECTOR_59         (tIsrFunc)&TU1_Interrupt              /* 0x3B 112  ivINT_FTM1                     used by PE */
 #define VECTOR_60         (tIsrFunc)&UnhandledInterrupt         /* 0x3C -    ivINT_FTM2                     unused by PE */
 #define VECTOR_61         (tIsrFunc)&UnhandledInterrupt         /* 0x3D -    ivINT_CMT                      unused by PE */
 #define VECTOR_62         (tIsrFunc)&UnhandledInterrupt         /* 0x3E -    ivINT_RTC                      unused by PE */
@@ -150,12 +153,12 @@ extern "C" {
 #define VECTOR_88         (tIsrFunc)&UnhandledInterrupt         /* 0x58 -    ivINT_Reserved88               unused by PE */
 #define VECTOR_89         (tIsrFunc)&UnhandledInterrupt         /* 0x59 -    ivINT_ADC1                     unused by PE */
 #define VECTOR_90         (tIsrFunc)&UnhandledInterrupt         /* 0x5A -    ivINT_I2C2                     unused by PE */
-#define VECTOR_91         (tIsrFunc)&UnhandledInterrupt         /* 0x5B -    ivINT_CAN0_ORed_Message_buffer unused by PE */
-#define VECTOR_92         (tIsrFunc)&UnhandledInterrupt         /* 0x5C -    ivINT_CAN0_Bus_Off             unused by PE */
-#define VECTOR_93         (tIsrFunc)&UnhandledInterrupt         /* 0x5D -    ivINT_CAN0_Error               unused by PE */
-#define VECTOR_94         (tIsrFunc)&UnhandledInterrupt         /* 0x5E -    ivINT_CAN0_Tx_Warning          unused by PE */
-#define VECTOR_95         (tIsrFunc)&UnhandledInterrupt         /* 0x5F -    ivINT_CAN0_Rx_Warning          unused by PE */
-#define VECTOR_96         (tIsrFunc)&UnhandledInterrupt         /* 0x60 -    ivINT_CAN0_Wake_Up             unused by PE */
+#define VECTOR_91         (tIsrFunc)&CAN1_InterruptRxTx         /* 0x5B 112  ivINT_CAN0_ORed_Message_buffer used by PE */
+#define VECTOR_92         (tIsrFunc)&CAN1_InterruptBusOff       /* 0x5C 112  ivINT_CAN0_Bus_Off             used by PE */
+#define VECTOR_93         (tIsrFunc)&CAN1_InterruptError        /* 0x5D 112  ivINT_CAN0_Error               used by PE */
+#define VECTOR_94         (tIsrFunc)&CAN1_InterruptTxWarn       /* 0x5E 112  ivINT_CAN0_Tx_Warning          used by PE */
+#define VECTOR_95         (tIsrFunc)&CAN1_InterruptRxWarn       /* 0x5F 112  ivINT_CAN0_Rx_Warning          used by PE */
+#define VECTOR_96         (tIsrFunc)&CAN1_InterruptWakeUp       /* 0x60 112  ivINT_CAN0_Wake_Up             used by PE */
 #define VECTOR_97         (tIsrFunc)&UnhandledInterrupt         /* 0x61 -    ivINT_SDHC                     unused by PE */
 #define VECTOR_98         (tIsrFunc)&UnhandledInterrupt         /* 0x62 -    ivINT_ENET_1588_Timer          unused by PE */
 #define VECTOR_99         (tIsrFunc)&UnhandledInterrupt         /* 0x63 -    ivINT_ENET_Transmit            unused by PE */

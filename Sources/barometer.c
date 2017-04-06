@@ -24,7 +24,7 @@ bool initBarometer(LDD_TDeviceData* i2c_component)
 	bool result = TRUE;
 	result &= writeInSensorRegister(i2c_component, &BAR_CTRL_REG1, &INIT_ALTI);
 	result &= writeInSensorRegister(i2c_component, &BAR_FLAG_REG, &INIT_FLAGS);
-	result &= writeInSensorRegister(i2c_component, &BAR_CTRL_REG1, &ACTIVE_MODE);
+	result &= writeInSensorRegister(i2c_component, &BAR_CTRL_REG1, &ACTIVE_MODE_BAR);
 	return result;
 }
 

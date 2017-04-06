@@ -18,7 +18,7 @@ static const uint8_t ACC_STATUS_REG = 0x00;
 
 // Values to put in registers during initialization of accelerometer
 static const uint8_t STANDBY_MODE = 0x00; // put the sensor in standby mode
-static const uint8_t ACTIVE_MODE = 0x01; // put the sensor in active mode
+static const uint8_t ACTIVE_MODE_ACC = 0x01; // put the sensor in active mode
 static const uint8_t RANGE_2G = 0x00;
 static const uint8_t RANGE_4G = 0x01;
 static const uint8_t RANGE_8G = 0x02;
